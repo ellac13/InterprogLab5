@@ -1,0 +1,44 @@
+<div class="body" id="view234">
+	
+	<ng-include src="'partials/view2.html'" ng-controller="View2Ctrl" class="selectedDishes" id="view2"></ng-include>
+
+	<div class="mainView" id="view4">
+		<div class="row" id="view4Row">
+				<div class="col-sm-12 col-md-6" id="view4IngredientThumbnail">
+				<div class="thumbnail">
+			      <h2>Toast</h2>
+			      <img src="images/toast.jpg">
+			      <div class="caption">
+			        <p>Description of toast</p>
+			        <button class="btn btn-default" id="backToSelectDishButton" type="button"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+			      </div>
+			    </div>
+				</div>
+				<div class="col-sm-12 col-md-6">
+					<div class="thumbnail">
+						<h2>Ingredients for 4 people</h2>
+						<hr>
+						<table id="dishIngredientTable">
+							<tr>
+								<td>2 kg</td>
+								<td>Mjöl</td>
+								<td>SEK</td>
+								<td>1000</td>
+							</tr>
+						</table>
+						<hr>
+						<div>
+							<button class="btn btn-default" id="confirmDishButton" type="button">Confirm Dish</button>
+							<p style="float:right">Total cost: <span id="dishCost">2000</span> SEK</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-6">
+					<div class="thumbnail">
+						<h2>Preparations</h2>
+						<p>blablablablablablabalba blablablablablablabalba blablablablablablabalba blablablablablablabalba blablablablablablabalba blablablablablablabalba blablablablablablabalba</p>
+					</div>
+				</div>
+			</div>
+	</div>
+</div>

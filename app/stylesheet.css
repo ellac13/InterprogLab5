@@ -1,0 +1,160 @@
+html, body {
+	align-items: stretch;
+	height: 100%;
+}
+
+div.container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex: 1;
+	align-items: stretch;
+	flex-direction: column;
+	/*background-image: url("images/family.jpg");*/
+	max-width: 36cm;
+	margin: auto;
+}
+div.sub_container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex: 1;
+	align-items: stretch;
+	flex-direction: column;
+	/*background-image: url("images/family.jpg");*/
+	max-width: 36cm;
+	margin: auto;
+}
+
+div.page-header {
+	background: rgba(255,178,0,0.3);
+	margin-top: 0;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+div.body {
+	display: flex;
+	height: 100%;
+	flex: 1;
+	align-items: stretch;
+	flex-direction: row;
+	background: rgba(255,255,0,0.0);
+}
+
+#view1{
+	background-image: url("images/family.jpg");
+}
+
+.selectedDishes {
+	width: 6cm;
+	margin-right: 5px;
+	background: rgba(0,0,238,0.5);
+}
+
+div.mainView {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	background-color: red;
+	posiiton: relative;
+}
+
+#welcome-textbox{
+	background: rgba(200,200,200,0.7);
+	max-width: 500px;
+}
+
+#selectedDishesTable {
+	width: 100%;
+}
+
+.dishSelectionHeader {
+	border: 0px;
+	border-bottom: 1px;
+	border-style: solid;
+	background: rgba(12, 233, 8, 0.3);
+}
+
+#selectedDishesTable td{
+	background: rgba(0,0,0,0.1);
+	word-break: break-all;
+}
+
+.rightAlignText {
+	text-align: right;
+}
+
+#searchDish {
+	max-width: 10cm;
+	float: left;
+}
+
+.dropdown {
+	max-width: 5cm;
+	float: left;
+	overflow: visible;
+}
+
+.dropdown-menu {
+	position: absolute;
+	z-index: 33;
+
+}
+
+#searchDishBar {
+	position: relative;
+	z-index: 3;
+}
+
+.selectDishGrid {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#dishIngredientTable, #printIngredientTable {
+	width: 100%	;
+}
+
+#view4 {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#view56{
+	display:flex;
+	flex-direction: column;
+
+}
+
+.view56Header {
+	background: rgba(255,178,0,0.3);
+}
+
+#view5{
+	display:flex;
+	flex-direction: column;	
+}
+
+#finalDishSelection{
+	flex: 1;
+}
+
+#printRecipeButton{
+ 	display:block;
+	margin:auto
+}
+
+#view6{
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.printTableQuantity {
+	width: 4cm;
+}
+
+.view6Image {
+	float:left;
+	max-width: 8cm;
+}

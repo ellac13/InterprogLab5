@@ -4,33 +4,146 @@
 // service is created first time it is needed and then just reuse it
 // the next time.
 dinnerPlannerApp.factory('Dinner',function ($resource) {
-  
-  var numberOfGuest = 2;
 
 
-  this.setNumberOfGuests = function(num) {
-    numberOfGuest = num;
-  }
+    this.baseImageURL = "https://spoonacular.com/recipeImages/";
 
-  this.getNumberOfGuests = function() {
-    return numberOfGuest;
-  }
+    var numberOfGuests = 4;
+    var menu = [];
 
 
-  // TODO in Lab 5: Add your model code from previous labs
-  // feel free to remove above example code
-  // you will need to modify the model (getDish and getAllDishes) 
-  // a bit to take the advantage of Angular resource service
-  // check lab 5 instructions for details
+    this.setNumberOfGuests = function(num) {
+        if (Number.isInteger(num) && num > 0) {
+        numberOfGuests = num;
+        };
+    }
+
+    this.getNumberOfGuests = function() {
+        return numberOfGuests;
+    }
+
+    //Returns all the dishes on the menu.
+    this.getFullMenu = function() {
+        return menu;
+    }
+
+    //Returns all ingredients for all the dishes on the menu.
+    this.getAllIngredients = function() {
+        var ingredients = [];
+        //console.log("outside for-each-loop");
+        for (var key in menu) {
+            //console.log("inside for-each-loop with key: " + key);
+            for (var key2 in menu[key]["ingredients"]) {
+                //console.log("inside inside for-each-loop with key: " + key2);
+                ingredients.push(menu[key]["ingredients"][key2]);
+            };
+        };
+        return ingredients;
+    }
+
+    //Returns the total price of the menu (all the ingredients multiplied by number of guests).
+    this.getTotalMenuPrice = function() {
+        var ingredients = this.getAllIngredients();
+        var sum = 0;
+        for (var i = 0; i < ingredients.length; i++) {
+            sum += ingredients[i]['price'] * ingredients[i]['quantity'] * numberOfGuests;
+        };
+        return parseInt(sum);
+    }
+
+    //TODO:fix this
+
+    //Adds the passed dish to the menu. If the dish of that type already exists on the menu
+    //it is removed from the menu and the new one added.
+    this.addDishToMenu = function(id) {
+        //Make sure that the same dish is not added twice to the menu
+        for(var i = 0; i < menu.length; i++){
+            if(menu[i].id == id){
+                return;
+            }
+        }
+
+        this.Dish.get({id:id},function(data){
+            //Make sure that the same dish is not added twice to the menu
+            for(var i = 0; i < menu.length; i++){
+                if(menu[i].id == id){
+                    return;
+                }
+            }
+            var dish = convertDishDataToDishObject(data);
+            menu.push(dish);
+            console.log("Successfully added dish to menu");
+        },function(data){
+            console.log("Failed to add dish to menu");
+        });
+    }
+
+    //Removes dish from menu
+    this.removeDishFromMenu = function(id) {
+        for(var key = 0; key < menu.length; key++){
+            if(menu[key]['id'] == id){
+                menu.splice(key, 1);
+            }
+        }
+    }
+
+    var convertDishDataToDishObject = function(data){
+        var dishObject = [];
+
+            dishObject.id = data.id;
+            dishObject.title = data.title;
+            dishObject.image = data.image;
+            dishObject.description = data.instructions;
+
+            dishObject.ingredients = [];
+            for(index in data.extendedIngredients){
+                var ingredientObject = {};
+                ingredientObject['name'] = data.extendedIngredients[index]['name'];
+                ingredientObject['quantity'] = data.extendedIngredients[index]['amount'];
+                ingredientObject['unit'] = data.extendedIngredients[index]['unit'];
+                ingredientObject['price'] = 1;
+                dishObject.ingredients.push(ingredientObject);
+            }
+
+        return dishObject;
+    }
+
+    //function that returns the ingredients of a dish with specific ID
+    this.getDishIngredients = function (id) {
+      return this.getDish(id)['ingredients'];
+    }
+
+
+    // TODO in Lab 5: Add your model code from previous labs
+    // feel free to remove above example code
+    // you will need to modify the model (getDish and getAllDishes) 
+    // a bit to take the advantage of Angular resource service
+    // check lab 5 instructions for details
+
+
+    this.DishSearch = $resource('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search',{},{
+        get: {
+            headers: {
+                'X-Mashape-Key': 'Qu9grxVNWpmshA4Kl9pTwyiJxVGUp1lKzrZjsnghQMkFkfA4LB'
+            }
+        }
+    });
+
+    this.Dish = $resource('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/:id/information',{},{
+        get: {
+            headers: {
+                'X-Mashape-Key': 'Qu9grxVNWpmshA4Kl9pTwyiJxVGUp1lKzrZjsnghQMkFkfA4LB'
+            }
+        }
+    });
 
 
 
 
-
-  // Angular service needs to return an object that has all the
-  // methods created in it. You can consider that this is instead
-  // of calling var model = new DinnerModel() we did in the previous labs
-  // This is because Angular takes care of creating it when needed.
-  return this;
+    // Angular service needs to return an object that has all the
+    // methods created in it. You can consider that this is instead
+    // of calling var model = new DinnerModel() we did in the previous labs
+    // This is because Angular takes care of creating it when needed.
+    return this;
 
 });
