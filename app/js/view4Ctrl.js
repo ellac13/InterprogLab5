@@ -2,9 +2,36 @@
 // information for one dish
 dinnerPlannerApp.controller('View4Ctrl', function ($scope,$routeParams,Dinner) {
   
-  // TODO in Lab 5: you need to get the dish according to the routing parameter
-  // $routingParams.paramName
-  alert('foofoo');
-  // Check the app.js to figure out what is the paramName in this case
+  $scope.currentDish;
+  $scope.showGrid = true;
+  $scope.numberOfGuests = Dinner.getNumberOfGuests();
+
+	$scope.getCurrentDish = function() {
+		$scope.status = "Fetching dish...";
+		Dinner.Dish.get({id:$routeParams.dishId},function(data){
+			$scope.status = "";
+			$scope.currentDish = data;
+			$scope.showGrid = false;
+ 			console.log($scope.currentDish);
+		},function(data){
+			$scope.status = "There was an error";
+		});
+	}
+
+	$scope.getNumberOfGuests = function(){
+		$scope.numberOfGuests = Dinner.getNumberOfGuests();
+		return $scope.numberOfGuests;
+	}
+
+	$scope.getCurrentDishPrice = function(){
+		return Dinner.getDishPrice($scope.currentDish);
+	}
+
+	$scope.addDishToMenu = function(id){
+		console.log("Trying to add dish to menu, mvh view 4");
+		Dinner.addDishToMenu(id);
+	}
+
+	$scope.getCurrentDish();
   
 });

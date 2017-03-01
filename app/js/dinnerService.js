@@ -50,7 +50,14 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
             }
         }
 
-        if(dish == null) return -1; //the specified dish was not in the menu
+        return this.getDishPrice(dish);
+    }
+
+    this.getDishPrice = function(dish){
+        if(dish == null) return -1;
+        if(!('ingredients' in dish)){
+            dish = convertDishDataToDishObject(dish);
+        }
 
         var ingredients = dish['ingredients'];
 
