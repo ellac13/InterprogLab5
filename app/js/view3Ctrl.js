@@ -7,14 +7,13 @@ dinnerPlannerApp.controller('View3Ctrl', function ($scope,Dinner) {
 	// including the case while the search is still running.
 
 	$scope.type = "appetizer";
-	$scope.currentDishSearch = "";
+	$scope.query = "";
 	$scope.dishes;
 
 	$scope.search = function(query,type) {
 		//console.log('Searing with query ' + query + ' and type ' + type);
 		$scope.status = "Searching...";
 		Dinner.DishSearch.get({query:query,type:type},function(data){
-			$scope.dishes=data.results;
 			console.log(data);
 			$scope.status = "Showing " + data.results.length + " results";
 			$scope.dishes = data.results;
@@ -27,5 +26,7 @@ dinnerPlannerApp.controller('View3Ctrl', function ($scope,Dinner) {
 		console.log("Trying to add dish to menu, mvh view 3");
 		Dinner.addDishToMenu(id);
 	}
+
+	$scope.search($scope.query, $scope.type);
 
 });
