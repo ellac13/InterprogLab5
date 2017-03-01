@@ -12,7 +12,6 @@ dinnerPlannerApp.controller('View4Ctrl', function ($scope,$routeParams,Dinner) {
 			$scope.status = "";
 			$scope.currentDish = data;
 			$scope.showGrid = false;
- 			console.log($scope.currentDish);
 		},function(data){
 			$scope.status = "There was an error";
 		});
@@ -28,7 +27,6 @@ dinnerPlannerApp.controller('View4Ctrl', function ($scope,$routeParams,Dinner) {
 	}
 
 	$scope.addDishToMenu = function(id){
-		console.log("Trying to add dish to menu, mvh view 4");
 		Dinner.addDishToMenu(id);
 	}
 

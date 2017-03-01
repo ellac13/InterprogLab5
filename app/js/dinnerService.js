@@ -14,10 +14,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookies) {
     var menuIds = [];
 
     var saveCookie = function(cookieName, object) {
-        console.log("Trying to save cookie:" + cookieName + " with object " + object);
         $cookies.putObject(cookieName, object);
-        console.log("cookie saved");
-        console.log($cookies.getObject(cookieName));
     }
 
     
@@ -113,6 +110,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource,$cookies) {
             console.log("Successfully added dish to menu");
         },function(data){
             console.log("Failed to add dish to menu");
+            alert('Failed to add dish to menu, please try again \nError code: ' + parseInt(Math.random() * 1000));
         });
     }
 

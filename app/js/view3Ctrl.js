@@ -23,7 +23,6 @@ dinnerPlannerApp.controller('View3Ctrl', function ($scope,Dinner) {
 	}
 
 	$scope.addDishToMenu = function(id){
-		console.log("Trying to add dish to menu, mvh view 3");
 		Dinner.addDishToMenu(id);
 	}
 
