@@ -3,18 +3,29 @@
 // dependency on any service you need. Angular will insure that the
 // service is created first time it is needed and then just reuse it
 // the next time.
-dinnerPlannerApp.factory('Dinner',function ($resource) {
+dinnerPlannerApp.factory('Dinner',function ($resource,$cookies) {
 
+    var model = this;
 
     this.baseImageURL = "https://spoonacular.com/recipeImages/";
 
-    var numberOfGuests = 4;
+    var numberOfGuests = 4; 
     var menu = [];
+    var menuIds = [];
 
+    var saveCookie = function(cookieName, object) {
+        console.log("Trying to save cookie:" + cookieName + " with object " + object);
+        $cookies.putObject(cookieName, object);
+        console.log("cookie saved");
+        console.log($cookies.getObject(cookieName));
+    }
+
+    
 
     this.setNumberOfGuests = function(num) {
         if (Number.isInteger(num) && num > 0) {
-        numberOfGuests = num;
+            numberOfGuests = num;
+            saveCookie('numberOfGuests', num);
         };
     }
 
@@ -97,6 +108,8 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
             }
             var dish = convertDishDataToDishObject(data);
             menu.push(dish);
+            menuIds.push(id);
+            saveCookie('menu', menuIds);
             console.log("Successfully added dish to menu");
         },function(data){
             console.log("Failed to add dish to menu");
@@ -108,6 +121,8 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
         for(var key = 0; key < menu.length; key++){
             if(menu[key]['id'] == id){
                 menu.splice(key, 1);
+                menuIds.splice(key, 1);
+                saveCookie('menu', menuIds);
             }
         }
     }
@@ -162,9 +177,25 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
         }
     });
 
+    var loadCookie = function(cookieName) {
+        return $cookies.getObject(cookieName);
+    }
 
+    var loadCookies = function() {
+        numberOfGuests = loadCookie('numberOfGuests');
+        if (!numberOfGuests) numberOfGuests=4;
+        menuIds = loadCookie('menu');
+        menu = [];
+        if (!menuIds){
+            menuIds = [];
+            return;
+        }
+        for (var i = 0; i < menuIds.length; i++) {
+            model.addDishToMenu(menuIds[i]);
+        };
+    }
 
-
+    loadCookies();
     // Angular service needs to return an object that has all the
     // methods created in it. You can consider that this is instead
     // of calling var model = new DinnerModel() we did in the previous labs
