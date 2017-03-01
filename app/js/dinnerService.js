@@ -41,6 +41,26 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
         return ingredients;
     }
 
+    //Returns the total price of a dish (all the ingredients multiplied by number of guests).
+    this.getDishInMenuPrice = function(id) {
+        var dish = null;
+        for(var key = 0; key < menu.length; key++){
+            if(menu[key]['id'] == id){
+                dish = menu[key];
+            }
+        }
+
+        if(dish == null) return -1; //the specified dish was not in the menu
+
+        var ingredients = dish['ingredients'];
+
+        var sum = 0;
+        for (var i = 0; i < ingredients.length; i++) {
+            sum += ingredients[i]['price'] * ingredients[i]['quantity'] * numberOfGuests;
+        };
+        return parseInt(sum);
+    }
+
     //Returns the total price of the menu (all the ingredients multiplied by number of guests).
     this.getTotalMenuPrice = function() {
         var ingredients = this.getAllIngredients();
