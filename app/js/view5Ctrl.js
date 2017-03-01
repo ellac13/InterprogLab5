@@ -2,7 +2,18 @@
 // display or modify the dinner menu
 dinnerPlannerApp.controller('View5Ctrl', function ($scope,Dinner) {
 
-  // TODO in Lab 5: Implement the methods to get the dinner menu
-  // add dish to menu and get total menu price
+	$scope.menu = Dinner.getFullMenu();
+
+    $scope.getFullMenu = function(){
+        $scope.menu = Dinner.getFullMenu();
+    }
+
+    $scope.getDishPrice = function(id) {
+        return Dinner.getDishInMenuPrice(id);
+    }
+
+    $scope.getTotalMenuPrice = function() {
+        return Dinner.getTotalMenuPrice();
+    }
 
 });
